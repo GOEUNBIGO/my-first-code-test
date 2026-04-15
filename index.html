@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>내 반짝반짝 캘린더</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; }
+        .calendar { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 350px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .days { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: bold; color: #777; }
+        .dates { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; margin-top: 10px; }
+        .date-cell { padding: 10px; cursor: pointer; border-radius: 10px; transition: 0.3s; }
+        .date-cell:hover { background-color: #ffe066; }
+        .today { background-color: #ffcc00; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="calendar">
+        <div class="header">
+            <h2 id="monthYear">2026년 4월</h2>
+        </div>
+        <div class="days">
+            <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+        </div>
+        <div id="dates" class="dates"></div>
+    </div>
+
+    <script>
+        const date = new Date();
+        const month = date.getMonth();
+        const year = date.getFullYear();
+        document.getElementById('monthYear').innerText = `${year}년 ${month + 1}월`;
+
+        const datesContainer = document.getElementById('dates');
+        const firstDay = new Date(year, month, 1).getDay();
+        const lastDate = new Date(year, month + 1, 0).getDate();
+
+        for (let i = 0; i < firstDay; i++) {
+            const empty = document.createElement('div');
+            datesContainer.appendChild(empty);
+        }
+
+        for (let i = 1; i <= lastDate; i++) {
+            const dateCell = document.createElement('div');
+            dateCell.classList.add('date-cell');
+            if (i === date.getDate()) dateCell.classList.add('today');
+            dateCell.innerText = i;
+            datesContainer.appendChild(dateCell);
+        }
+    </script>
+</body>
+</html>
